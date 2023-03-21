@@ -11,12 +11,11 @@ module.exports = function (api) {
         {
           alias: {
             // This needs to be mirrored in tsconfig.json
-            // '@/components': './src/components',
-            // '@/utils': './src/utils',
-            // '@/modules': './src/modules',
-            // '@/contexts': './src/contexts',
-            // '@/providers': './src/providers',
-            '@/*': './src/*',
+            '@/components': './src/components',
+            '@/utils': './src/utils',
+            '@/modules': './src/modules',
+            '@/contexts': './src/contexts',
+            '@/providers': './src/providers',
           },
         },
       ],

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FbApi</string>
+    <string name="facebook_app_id">436085855384149</string>
+    <string name="facebook_client_token">cbbd5cf7b7584d755aa713fea663b472</string>
+    <string name="fb_login_protocol_scheme">fb436085855384149</string>
+    <string name="facebook_app_name">Simple Login</string>
 </resources>

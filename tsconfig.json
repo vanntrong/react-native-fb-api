@@ -8,7 +8,13 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": "./src",                                      /* Base directory to resolve non-absolute module names. */
     "paths": {
-      "@/*": ["*"]
+      "@/components/*": ["components/*"],
+      "@/modules/*": ["modules/*"],
+      "@/utils/*": ["utils/*"],
+      "@/assets/*": ["assets/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/providers/*": ["providers/*"],
+      "@/contexts/*": ["contexts/*"],
     }
   }
 }

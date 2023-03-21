@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeScreen from '@/modules/home/screens/home';
+import HomeScreen from '../modules/home/screens/home';
 import {PATH} from './paths.config';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import LoginScreen from '@/modules/auth/screens/login';
