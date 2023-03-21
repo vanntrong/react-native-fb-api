@@ -18,20 +18,13 @@ const useGetLikes = () => {
     }
 
     const getLikeGraphApi = new GraphRequest(
-      `/${token.userID}`,
+      `/${
+        token.userID
+      }/likes?fields=picture{url},name,followers_count,description&limit=25${
+        next ? `&after=${next}` : ''
+      }`,
       {
         accessToken: token.accessToken,
-        parameters: {
-          limit: {
-            string: '1',
-          },
-          after: {
-            string: next,
-          },
-          fields: {
-            string: 'likes{picture{url},name,followers_count}',
-          },
-        },
       },
       (err, result) => {
         if (err) {

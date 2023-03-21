@@ -27,23 +27,21 @@ export type TUserFriend = {
 
 export type TUserLike = {
   id: string;
-  likes: {
-    data: {
-      picture: {
-        data: {
-          url: string;
-        };
+  data: {
+    picture: {
+      data: {
+        url: string;
       };
-      name: string;
-      id: string;
-      followers_count: number;
-    }[];
-    paging: {
-      cursors: {
-        before: string;
-        after: string;
-      };
-      next: string;
     };
+    name: string;
+    id: string;
+    followers_count: number;
+  }[];
+  paging: {
+    cursors: {
+      before: string;
+      after: string;
+    };
+    next: string;
   };
 };

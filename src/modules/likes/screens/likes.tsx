@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -11,13 +11,17 @@ import useGetLikes from '../services/useGetLikes';
 
 const LikesScreen = () => {
   const {getLikes, data} = useGetLikes();
+  const [next, setNext] = useState<string | null>(null);
 
   useEffect(() => {
-    getLikes('MTEyMzI3NTk3MTk5NTA0');
+    getLikes();
   }, [getLikes]);
 
   useEffect(() => {
     console.log({data});
+    if (data) {
+      setNext(data.paging.cursors.after);
+    }
   }, [data]);
 
   return (
@@ -26,9 +30,9 @@ const LikesScreen = () => {
         <Text>Likes Screen</Text>
         {data && (
           <View style={styles.likeList}>
-            {data.likes.data.map(like => (
+            {data.data.map(like => (
               <TouchableOpacity>
-                <View key={like.id} style={styles.likeContainer}>
+                <View key={like.id + like.name} style={styles.likeContainer}>
                   <Image
                     source={{uri: like.picture.data.url}}
                     style={styles.likeImage}
