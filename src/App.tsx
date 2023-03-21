@@ -2,21 +2,20 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {screens} from './configs/routes.config';
+import {privateScreens, publicScreens} from './configs/routes.config';
 import AuthProvider from './providers/auth.provider';
 
 const Tab = createBottomTabNavigator();
-
 const App = () => {
   return (
     <AuthProvider>
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName="home"
+          initialRouteName="Login"
           screenOptions={{
             header: () => <SafeAreaView />,
           }}>
-          {screens.map(screen => (
+          {[...privateScreens, ...publicScreens].map(screen => (
             <Tab.Screen
               key={screen.name}
               name={screen.name}

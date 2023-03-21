@@ -1,11 +1,49 @@
 export type TUser = {
-  email: string;
-  firstName: string;
-  imageURL: string;
-  lastName: string;
-  linkURL: string | null;
-  middleName: string | null;
+  first_name: string;
+  last_name: string;
+  birthday: string;
   name: string;
-  userID: string;
-  friendCount?: number;
+  hometown?: {
+    id: string;
+    name: string;
+  };
+  gender?: string;
+  picture?: {
+    data: {
+      url: string;
+    };
+  };
+  email: string;
+  friends?: TUserFriend;
+  id: string;
+};
+
+export type TUserFriend = {
+  data: any[];
+  summary: {
+    total_count: number;
+  };
+};
+
+export type TUserLike = {
+  id: string;
+  likes: {
+    data: {
+      picture: {
+        data: {
+          url: string;
+        };
+      };
+      name: string;
+      id: string;
+      followers_count: number;
+    }[];
+    paging: {
+      cursors: {
+        before: string;
+        after: string;
+      };
+      next: string;
+    };
+  };
 };

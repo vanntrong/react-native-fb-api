@@ -1,18 +1,22 @@
-import {useAuthContext} from '../../../contexts/auth.context';
 import {useState} from 'react';
-import {AccessToken, LoginManager, Profile} from 'react-native-fbsdk-next';
-import {TUser} from '@/types/user.type';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import useGetMe from './useGetMe';
 
 const useLoginFacebook = () => {
+  const {getMe} = useGetMe();
+
   const [isCancel, setIsCancel] = useState(false);
   const [isError, setIsError] = useState(false);
-  const {setUser, setAccessToken} = useAuthContext();
+
   async function loginFacebook() {
     // Attempt login with permissions
     const result = await LoginManager.logInWithPermissions([
       'public_profile',
       'email',
       'user_friends',
+      'user_birthday',
+      'user_gender',
+      'user_likes',
     ]);
 
     if (result.isCancelled) {
@@ -28,12 +32,7 @@ const useLoginFacebook = () => {
       return;
     }
 
-    setAccessToken(data.accessToken.toString());
-
-    Profile.getCurrentProfile().then(profile => {
-      console.log('profile', profile);
-      setUser(profile as TUser);
-    });
+    getMe(data.accessToken.toString());
   }
 
   return {

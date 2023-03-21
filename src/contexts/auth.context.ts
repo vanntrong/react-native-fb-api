@@ -1,4 +1,4 @@
-import {TUser} from '@/types/user.type';
+import {TUser} from '../types/user.type';
 import {createContext, useContext} from 'react';
 
 interface IAuthContext {
