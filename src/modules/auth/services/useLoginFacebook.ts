@@ -17,6 +17,7 @@ const useLoginFacebook = () => {
       'user_birthday',
       'user_gender',
       'user_likes',
+      'groups_show_list',
     ]);
 
     if (result.isCancelled) {

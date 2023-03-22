@@ -4,6 +4,7 @@ import {PATH} from './paths.config';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import LoginScreen from '../modules/auth/screens/login';
 import LikesScreen from '../modules/likes/screens/likes';
+import GroupsScreen from '../modules/groups/screens/groups';
 
 type TScreen = {
   name: string;
@@ -21,6 +22,11 @@ export const privateScreens: TScreen[] = [
     name: PATH.LIKES,
     component: LikesScreen,
     icon: () => <FaIcon name="heart" size={20} />,
+  },
+  {
+    name: PATH.GROUPS,
+    component: GroupsScreen,
+    icon: () => <FaIcon name="users" size={20} />,
   },
 ];
 

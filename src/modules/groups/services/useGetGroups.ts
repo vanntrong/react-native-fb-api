@@ -4,13 +4,13 @@ import {
   GraphRequest,
   GraphRequestManager,
 } from 'react-native-fbsdk-next';
-import {TUserPageLikes} from '../types/likes';
+import {TUserGroups} from '../types/groups';
 
-const useGetLikes = () => {
-  const [data, setData] = useState<TUserPageLikes>();
+const useGetGroups = () => {
+  const [data, setData] = useState<TUserGroups>();
   const [loading, setLoading] = useState(false);
 
-  const getLikes = useCallback(async (next?: string) => {
+  const getGroups = useCallback(async (next?: string) => {
     setLoading(true);
     const token = await AccessToken.getCurrentAccessToken();
     if (!token) {
@@ -18,9 +18,7 @@ const useGetLikes = () => {
     }
 
     const getLikeGraphApi = new GraphRequest(
-      `/${
-        token.userID
-      }/likes?fields=picture{url},name,followers_count,description,about&limit=25${
+      `/${token.userID}/groups?fields=picture{url},name,description&limit=25${
         next ? `&after=${next}` : ''
       }`,
       {
@@ -32,7 +30,7 @@ const useGetLikes = () => {
           setLoading(false);
           return;
         } else {
-          setData(result as TUserPageLikes);
+          setData(result as TUserGroups);
           setLoading(false);
         }
       },
@@ -42,10 +40,10 @@ const useGetLikes = () => {
   }, []);
 
   return {
-    getLikes,
+    getGroups,
     data,
     loading,
   };
 };
 
-export default useGetLikes;
+export default useGetGroups;
