@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import {privateScreens, publicScreens} from './configs/routes.config';
 import AuthProvider from './providers/auth.provider';
 
@@ -27,6 +28,7 @@ const App = () => {
           ))}
         </Tab.Navigator>
       </NavigationContainer>
+      <Toast />
     </AuthProvider>
   );
 };

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   likeInfoWrapper: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     flexGrow: 1,
   },

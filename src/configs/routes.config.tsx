@@ -2,9 +2,11 @@ import React from 'react';
 import HomeScreen from '../modules/home/screens/home';
 import {PATH} from './paths.config';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
+import MaIcon from 'react-native-vector-icons/MaterialIcons';
 import LoginScreen from '../modules/auth/screens/login';
 import LikesScreen from '../modules/likes/screens/likes';
 import GroupsScreen from '../modules/groups/screens/groups';
+import PostsScreen from '../modules/posts/screens/posts';
 
 type TScreen = {
   name: string;
@@ -27,6 +29,11 @@ export const privateScreens: TScreen[] = [
     name: PATH.GROUPS,
     component: GroupsScreen,
     icon: () => <FaIcon name="users" size={20} />,
+  },
+  {
+    name: PATH.POSTS,
+    component: PostsScreen,
+    icon: () => <MaIcon name="article" size={20} />,
   },
 ];
 

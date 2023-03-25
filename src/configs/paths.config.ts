@@ -3,4 +3,5 @@ export const PATH = {
   LOGIN: 'Login',
   LIKES: 'Likes',
   GROUPS: 'Groups',
+  POSTS: 'Posts',
 };
