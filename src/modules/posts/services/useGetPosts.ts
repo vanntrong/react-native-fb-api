@@ -32,7 +32,8 @@ const useGetPosts = () => {
     const getPostsApi = new GraphRequest(
       `/me/posts?${queryString.stringify({
         ...{
-          fields: 'caption,description,name,full_picture,created_time,privacy',
+          fields:
+            'caption,description,name,full_picture,created_time,privacy,attachments',
           limit: `${LIMIT}`,
           ...(next ? next : {}),
         },

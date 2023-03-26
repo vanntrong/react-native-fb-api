@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import React, {FC, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {EPrivacy, TPost} from '../../types/post';
+import Video from 'react-native-video';
 
 interface IPostCardProps {
   post: TPost;
@@ -17,21 +18,33 @@ const MAX_LENGTH_DESCRIPTION = 100;
 
 const PostCard: FC<IPostCardProps> = ({post}) => {
   const [isSplitDescription, setIsSplitDescription] = useState<boolean>(true);
+  const isVideoAttachment = post.attachments?.data[0]?.type.includes('video');
 
   const renderPrivacy = (privacy: EPrivacy) => {
     if (EPrivacy[privacy]) {
       return PRIVACY_ICONS[privacy];
     }
     return null;
-    // return <Text>🔒</Text>;
   };
+
   return (
     <View style={styles.post}>
-      {post.full_picture && (
+      {!isVideoAttachment && post.full_picture && (
         <View style={styles.postImageWrapper}>
           <Image source={{uri: post.full_picture}} style={styles.postImage} />
         </View>
       )}
+
+      {isVideoAttachment && (
+        <View style={styles.postImageWrapper}>
+          <Video
+            source={{uri: post.attachments?.data[0].media.source}}
+            style={styles.postImage}
+            controls={true}
+          />
+        </View>
+      )}
+
       <Text style={styles.postCreatedTime}>
         {dayjs(post.created_time).format('DD/MM/YYYY HH:mm:ss')}
         {renderPrivacy(post.privacy.value)}
@@ -81,6 +94,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  postVideoWrapper: {
+    width: '100%',
+    height: 250,
+    position: 'relative',
+  },
+  postVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   postCreatedTime: {
     marginTop: 10,

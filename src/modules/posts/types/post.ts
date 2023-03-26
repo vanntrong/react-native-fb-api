@@ -18,6 +18,24 @@ export type TPost = {
     friends: string;
     value: EPrivacy;
   };
+  attachments?: {
+    data: {
+      media: {
+        image: {
+          height: number;
+          src: string;
+          width: number;
+        };
+        source: string;
+      };
+      target: {
+        id: string;
+        url: string;
+      };
+      type: 'video_autoplay' | 'photo' | 'album' | 'video_inline';
+      url: string;
+    }[];
+  };
 };
 
 export type TGetPostsResponse = {
