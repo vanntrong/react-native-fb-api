@@ -39,21 +39,23 @@ const PostsScreen = () => {
     if (data) {
       setPosts(prev => [...prev, ...data.data]);
 
-      if (data.data.length > LIMIT) {
-        const parsed: any = queryString.parse(data.paging.next);
-        const {
-          until,
-          __paging_token,
-          since = undefined,
-          __previous = undefined,
-        } = parsed;
-        setNext({
-          until,
-          __paging_token,
-          since,
-          __previous,
-        });
+      if (data.data.length < LIMIT) {
+        return;
       }
+
+      const parsed: any = queryString.parse(data.paging.next);
+      const {
+        until,
+        __paging_token,
+        since = undefined,
+        __previous = undefined,
+      } = parsed;
+      setNext({
+        until,
+        __paging_token,
+        since,
+        __previous,
+      });
     }
   }, [data]);
 

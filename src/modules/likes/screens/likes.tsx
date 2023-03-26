@@ -32,10 +32,10 @@ const LikesScreen = () => {
     }
     if (data) {
       setPageLikes(prev => [...prev, ...data.data]);
-
-      if (data.data.length > LIMIT) {
-        setNext(data.paging.cursors.after);
+      if (data.data.length < LIMIT) {
+        return;
       }
+      setNext(data.paging.cursors.after);
     }
   }, [data]);
 
