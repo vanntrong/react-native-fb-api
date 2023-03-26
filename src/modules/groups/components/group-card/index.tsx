@@ -20,7 +20,7 @@ const GroupCard: FC<IGroupCardProps> = ({item, isShowDescription}) => {
         </View>
       </View>
       {isShowDescription && item.description && (
-        <Text>Description: {item.description}</Text>
+        <Text style={styles.groupText}>Description: {item.description}</Text>
       )}
     </View>
   );
@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
   },
   groupText: {
     marginLeft: 10,
+    color: '#333',
   },
 });

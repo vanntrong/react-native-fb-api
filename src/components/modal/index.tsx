@@ -17,7 +17,7 @@ const Modal: FC<IModalProps> = ({children, visible, onClose}) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Pressable onPress={onClose} style={styles.closeButton}>
-            <FaIcon name="close" size={20} />
+            <FaIcon name="close" size={20} color={'#333'} />
           </Pressable>
           <View>{children}</View>
         </View>

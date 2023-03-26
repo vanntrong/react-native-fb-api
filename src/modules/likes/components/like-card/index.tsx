@@ -22,9 +22,11 @@ const LikeCard: FC<ILikeCardProps> = ({
           <Text style={styles.likeText}>Follower: {item.followers_count}</Text>
         </View>
       </View>
-      {isShowAbout && item.about && <Text>About: {item.about}</Text>}
+      {isShowAbout && item.about && (
+        <Text style={styles.likeText}>About: {item.about}</Text>
+      )}
       {isShowDescription && item.description && (
-        <Text>Description: {item.description}</Text>
+        <Text style={styles.likeText}>Description: {item.description}</Text>
       )}
     </View>
   );
@@ -55,5 +57,6 @@ const styles = StyleSheet.create({
   },
   likeText: {
     marginLeft: 10,
+    color: '#333',
   },
 });

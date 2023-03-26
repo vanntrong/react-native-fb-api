@@ -8,32 +8,38 @@ import LikesScreen from '../modules/likes/screens/likes';
 import GroupsScreen from '../modules/groups/screens/groups';
 import PostsScreen from '../modules/posts/screens/posts';
 
+type TRenderIconParams = {focused: boolean; color: string; size: number};
+
 type TScreen = {
   name: string;
   component: React.FC;
-  icon: () => React.ReactElement;
+  icon: (params: TRenderIconParams) => React.ReactElement;
 };
 
 export const privateScreens: TScreen[] = [
   {
     name: PATH.HOME,
     component: HomeScreen,
-    icon: () => <FaIcon name="home" size={20} />,
+    icon: ({color, size}) => {
+      return <FaIcon name="home" size={size} color={color} />;
+    },
   },
   {
     name: PATH.LIKES,
     component: LikesScreen,
-    icon: () => <FaIcon name="heart" size={20} />,
+    icon: ({color, size}) => <FaIcon name="heart" size={size} color={color} />,
   },
   {
     name: PATH.GROUPS,
     component: GroupsScreen,
-    icon: () => <FaIcon name="users" size={20} />,
+    icon: ({size, color}) => <FaIcon name="users" size={size} color={color} />,
   },
   {
     name: PATH.POSTS,
     component: PostsScreen,
-    icon: () => <MaIcon name="article" size={20} />,
+    icon: ({size, color}) => (
+      <MaIcon name="article" size={size} color={color} />
+    ),
   },
 ];
 

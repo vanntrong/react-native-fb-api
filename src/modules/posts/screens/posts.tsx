@@ -17,12 +17,12 @@ import useSharePhotos from '../services/useSharePhotos';
 import {TPost} from '../types/post';
 import queryString from 'query-string';
 import {LIMIT} from '../../../configs/app.config';
-// import useShareVideo from '../services/useShareVideo';
+import useShareVideo from '../services/useShareVideo';
 
 const PostsScreen = () => {
   const {getPosts, data, loading} = useGetPosts();
   const {sharePhotos} = useSharePhotos();
-  // const {shareVideo} = useShareVideo();
+  const {shareVideo} = useShareVideo();
 
   const [next, setNext] = useState<TNext>();
   const [posts, setPosts] = useState<TPost[]>([]);
@@ -77,15 +77,15 @@ const PostsScreen = () => {
     });
   };
 
-  // const onUploadVideos = () => {
-  //   DocumentPicker.pick({
-  //     type: [DocumentPicker.types.video],
-  //   }).then((res: DocumentPickerResponse[]) => {
-  //     const videos = res.map(item => item.uri);
-  //     console.log({videos});
-  //     shareVideo(videos[0]);
-  //   });
-  // };
+  const onUploadVideos = () => {
+    DocumentPicker.pick({
+      type: [DocumentPicker.types.video],
+    }).then((res: DocumentPickerResponse[]) => {
+      const videos = res.map(item => item.uri);
+      console.log({videos});
+      shareVideo(videos[0]);
+    });
+  };
 
   const renderItem: ListRenderItem<TPost> = ({item}) => {
     return <PostCard post={item} />;
@@ -103,11 +103,11 @@ const PostsScreen = () => {
       <TouchableOpacity style={styles.buttonUpload} onPress={onUploadPhotos}>
         <Text style={styles.buttonText}>Upload photos</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity
+      <TouchableOpacity
         style={{...styles.buttonUpload, ...styles.buttonUploadVideo}}
         onPress={onUploadVideos}>
         <Text style={styles.buttonText}>Upload videos</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
       <FlatList
         style={styles.postList}
         data={posts}

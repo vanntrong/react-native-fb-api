@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#333',
   },
   email: {
     fontSize: 14,
-    color: '#999',
+    color: '#333',
   },
   info: {
     marginLeft: 10,
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     borderColor: '#ccc',
+    color: '#333',
   },
   inputDisabled: {
     backgroundColor: '#eee',
