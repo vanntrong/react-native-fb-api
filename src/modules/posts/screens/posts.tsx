@@ -16,13 +16,15 @@ import useGetPosts, {TNext} from '../services/useGetPosts';
 import useSharePhotos from '../services/useSharePhotos';
 import {TPost} from '../types/post';
 import queryString from 'query-string';
+// import useShareVideo from '../services/useShareVideo';
 
 const PostsScreen = () => {
+  const {getPosts, data} = useGetPosts();
+  const {sharePhotos} = useSharePhotos();
+  // const {shareVideo} = useShareVideo();
+
   const [next, setNext] = useState<TNext>();
   const [posts, setPosts] = useState<TPost[]>([]);
-
-  const {getPosts, data, loading} = useGetPosts();
-  const {sharePhotos} = useSharePhotos();
 
   useEffect(() => {
     getPosts();
@@ -64,16 +66,15 @@ const PostsScreen = () => {
     });
   };
 
-  const onUploadVideos = () => {
-    DocumentPicker.pick({
-      allowMultiSelection: true,
-      type: [DocumentPicker.types.video],
-    }).then((res: DocumentPickerResponse[]) => {
-      const videos = res.map(item => item.uri);
-
-      console.log({videos});
-    });
-  };
+  // const onUploadVideos = () => {
+  //   DocumentPicker.pick({
+  //     type: [DocumentPicker.types.video],
+  //   }).then((res: DocumentPickerResponse[]) => {
+  //     const videos = res.map(item => item.uri);
+  //     console.log({videos});
+  //     shareVideo(videos[0]);
+  //   });
+  // };
 
   const renderItem: ListRenderItem<TPost> = ({item}) => {
     return <PostCard post={item} />;
@@ -88,14 +89,11 @@ const PostsScreen = () => {
       <TouchableOpacity style={styles.buttonUpload} onPress={onUploadPhotos}>
         <Text style={styles.buttonText}>Upload photos</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{...styles.buttonUpload, ...styles.buttonUploadVideo}}
         onPress={onUploadVideos}>
         <Text style={styles.buttonText}>Upload videos</Text>
-      </TouchableOpacity>
-
-      {loading && <ActivityIndicator size="large" />}
-
+      </TouchableOpacity> */}
       <FlatList
         style={styles.postList}
         data={posts}
@@ -134,5 +132,6 @@ const styles = StyleSheet.create({
   postList: {
     display: 'flex',
     paddingBottom: 20,
+    marginBottom: 20,
   },
 });

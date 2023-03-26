@@ -1,22 +1,35 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message';
 import {privateScreens, publicScreens} from './configs/routes.config';
-import AuthProvider from './providers/auth.provider';
+import {useAuthContext} from './contexts/auth.context';
 
 const Tab = createBottomTabNavigator();
 const App = () => {
+  const {user} = useAuthContext();
+
+  // const [isSignedIn, setIsSignedIn] = React.useState(false);
+
+  // React.useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsSignedIn(true);
+  //   }, 5000);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
+
+  useEffect(() => {
+    console.log('APP:', user);
+  }, [user]);
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="Login"
-          screenOptions={{
-            header: () => <SafeAreaView />,
-          }}>
-          {[...privateScreens, ...publicScreens].map(screen => (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName={user ? 'Home' : 'Login'}
+        screenOptions={{
+          header: () => <SafeAreaView />,
+        }}>
+        {/* {[...privateScreens, ...publicScreens].map(screen => (
             <Tab.Screen
               key={screen.name}
               name={screen.name}
@@ -25,11 +38,30 @@ const App = () => {
                 tabBarIcon: screen.icon,
               }}
             />
-          ))}
-        </Tab.Navigator>
-      </NavigationContainer>
-      <Toast />
-    </AuthProvider>
+          ))} */}
+        {!user
+          ? publicScreens.map(screen => (
+              <Tab.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+                options={{
+                  tabBarIcon: screen.icon,
+                }}
+              />
+            ))
+          : privateScreens.map(screen => (
+              <Tab.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+                options={{
+                  tabBarIcon: screen.icon,
+                }}
+              />
+            ))}
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 

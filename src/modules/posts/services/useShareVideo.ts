@@ -21,6 +21,7 @@ const useShareVideo = () => {
         });
       })
       .catch(err => {
+        console.log(err);
         Toast.show({
           type: 'error',
           text1: 'Upload video failed',

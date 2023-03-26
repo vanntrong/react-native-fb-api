@@ -6,6 +6,7 @@ interface IAuthContext {
   setUser: (user: TUser | null) => void;
   accessToken: string | null;
   setAccessToken: (accessToken: string | null) => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -13,6 +14,7 @@ export const AuthContext = createContext<IAuthContext>({
   setUser: () => {},
   accessToken: null,
   setAccessToken: () => {},
+  logout: () => {},
 });
 
 export const useAuthContext = () => useContext(AuthContext);

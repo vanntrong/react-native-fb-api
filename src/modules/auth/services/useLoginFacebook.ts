@@ -1,8 +1,10 @@
+import {useAuthContext} from '../../../contexts/auth.context';
 import {useState} from 'react';
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import useGetMe from './useGetMe';
 
 const useLoginFacebook = () => {
+  const {setUser} = useAuthContext();
   const {getMe} = useGetMe();
 
   const [isCancel, setIsCancel] = useState(false);
@@ -26,14 +28,16 @@ const useLoginFacebook = () => {
     }
 
     // Once signed in, get the users AccesToken
-    const data = await AccessToken.getCurrentAccessToken();
+    const accessToken = await AccessToken.getCurrentAccessToken();
 
-    if (!data) {
+    if (!accessToken) {
       setIsError(true);
       return;
     }
 
-    getMe(data.accessToken.toString());
+    getMe(accessToken.accessToken.toString()).then(res => {
+      setUser(res);
+    });
   }
 
   return {

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 const HomeScreen = () => {
-  const {user} = useAuthContext();
+  const {user, logout} = useAuthContext();
 
   const [firstName, setFirstName] = useState(user?.first_name || '');
   const [lastName, setLastName] = useState(user?.last_name || '');
@@ -80,6 +80,10 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.buttonSubmit}>
           <Text style={styles.buttonText}>Update Profile</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -142,6 +146,14 @@ const styles = StyleSheet.create({
   },
   buttonSubmit: {
     backgroundColor: '#4b79c3',
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  buttonLogout: {
+    backgroundColor: '#e74c3c',
     marginTop: 10,
     padding: 10,
     borderRadius: 5,

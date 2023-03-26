@@ -1,16 +1,30 @@
 import dayjs from 'dayjs';
 import React, {FC, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {TPost} from '../../types/post';
+import {EPrivacy, TPost} from '../../types/post';
 
 interface IPostCardProps {
   post: TPost;
 }
 
+const PRIVACY_ICONS: Record<EPrivacy, React.ReactNode> = {
+  SELF: <Text>🔒</Text>,
+  ALL_FRIENDS: <Text>👥</Text>,
+  EVERYONE: <Text>🌎</Text>,
+};
+
 const MAX_LENGTH_DESCRIPTION = 100;
 
 const PostCard: FC<IPostCardProps> = ({post}) => {
   const [isSplitDescription, setIsSplitDescription] = useState<boolean>(true);
+
+  const renderPrivacy = (privacy: EPrivacy) => {
+    if (EPrivacy[privacy]) {
+      return PRIVACY_ICONS[privacy];
+    }
+    return null;
+    // return <Text>🔒</Text>;
+  };
   return (
     <View style={styles.post}>
       {post.full_picture && (
@@ -20,6 +34,7 @@ const PostCard: FC<IPostCardProps> = ({post}) => {
       )}
       <Text style={styles.postCreatedTime}>
         {dayjs(post.created_time).format('DD/MM/YYYY HH:mm:ss')}
+        {renderPrivacy(post.privacy.value)}
       </Text>
       {post.name && <Text style={styles.postName}>{post.name}</Text>}
       {post.description && (
