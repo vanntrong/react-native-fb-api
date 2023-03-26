@@ -1,9 +1,11 @@
+import {LIMIT} from '../../../configs/app.config';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   ListRenderItem,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -25,9 +27,16 @@ const GroupsScreen = () => {
   }, [getGroups]);
 
   useEffect(() => {
+    if (data?.data.length === 0) {
+      setNext(null);
+      return;
+    }
     if (data) {
       setGroups(prev => [...prev, ...data.data]);
-      setNext(data.paging.cursors.after);
+
+      if (data.data.length > LIMIT) {
+        setNext(data.paging.cursors.after);
+      }
     }
   }, [data]);
 
@@ -44,29 +53,29 @@ const GroupsScreen = () => {
   };
 
   const renderLoading = () => {
+    if (!loading && !next) {
+      return <Text>No more groups</Text>;
+    }
     return <ActivityIndicator />;
   };
 
   const handleLoadMore = () => {
     if (next) {
       getGroups(next);
+      setNext(null);
     }
   };
 
   return (
     <View style={styles.container}>
-      {!data && loading && <ActivityIndicator size="large" />}
-
-      {data && (
-        <FlatList
-          data={groups}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={renderLoading}
-        />
-      )}
+      <FlatList
+        data={groups}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={renderLoading}
+      />
 
       {selectedItem && (
         <Modal

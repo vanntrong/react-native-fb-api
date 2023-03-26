@@ -1,3 +1,4 @@
+import {LIMIT} from '../../../configs/app.config';
 import {useCallback, useState} from 'react';
 import {
   AccessToken,
@@ -18,7 +19,9 @@ const useGetGroups = () => {
     }
 
     const getLikeGraphApi = new GraphRequest(
-      `/${token.userID}/groups?fields=picture{url},name,description&limit=25${
+      `/${
+        token.userID
+      }/groups?fields=picture{url},name,description&limit=${LIMIT}${
         next ? `&after=${next}` : ''
       }`,
       {

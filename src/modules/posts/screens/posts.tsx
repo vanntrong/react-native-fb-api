@@ -16,10 +16,11 @@ import useGetPosts, {TNext} from '../services/useGetPosts';
 import useSharePhotos from '../services/useSharePhotos';
 import {TPost} from '../types/post';
 import queryString from 'query-string';
+import {LIMIT} from '../../../configs/app.config';
 // import useShareVideo from '../services/useShareVideo';
 
 const PostsScreen = () => {
-  const {getPosts, data} = useGetPosts();
+  const {getPosts, data, loading} = useGetPosts();
   const {sharePhotos} = useSharePhotos();
   // const {shareVideo} = useShareVideo();
 
@@ -31,27 +32,35 @@ const PostsScreen = () => {
   }, [getPosts]);
 
   useEffect(() => {
+    if (data?.data.length === 0) {
+      setNext(undefined);
+      return;
+    }
     if (data) {
       setPosts(prev => [...prev, ...data.data]);
-      const parsed: any = queryString.parse(data.paging.next);
-      const {
-        until,
-        __paging_token,
-        since = undefined,
-        __previous = undefined,
-      } = parsed;
-      setNext({
-        until,
-        __paging_token,
-        since,
-        __previous,
-      });
+
+      if (data.data.length > LIMIT) {
+        const parsed: any = queryString.parse(data.paging.next);
+        const {
+          until,
+          __paging_token,
+          since = undefined,
+          __previous = undefined,
+        } = parsed;
+        setNext({
+          until,
+          __paging_token,
+          since,
+          __previous,
+        });
+      }
     }
   }, [data]);
 
   const handleLoadMore = () => {
     if (next) {
       getPosts(next);
+      setNext(undefined);
     }
   };
 
@@ -81,6 +90,9 @@ const PostsScreen = () => {
   };
 
   const renderLoading = () => {
+    if (!loading && !next) {
+      return <Text>No more posts</Text>;
+    }
     return <ActivityIndicator />;
   };
 

@@ -1,3 +1,4 @@
+import {LIMIT} from '../../../configs/app.config';
 import queryString from 'query-string';
 import {useCallback, useState} from 'react';
 import {
@@ -32,6 +33,7 @@ const useGetPosts = () => {
       `/me/posts?${queryString.stringify({
         ...{
           fields: 'caption,description,name,full_picture,created_time,privacy',
+          limit: `${LIMIT}`,
           ...(next ? next : {}),
         },
       })}`,

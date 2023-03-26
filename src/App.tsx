@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {privateScreens, publicScreens} from './configs/routes.config';
 import {useAuthContext} from './contexts/auth.context';
@@ -9,19 +9,6 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   const {user} = useAuthContext();
 
-  // const [isSignedIn, setIsSignedIn] = React.useState(false);
-
-  // React.useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsSignedIn(true);
-  //   }, 5000);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  useEffect(() => {
-    console.log('APP:', user);
-  }, [user]);
   return (
     <NavigationContainer>
       <Tab.Navigator

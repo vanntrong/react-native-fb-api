@@ -1,3 +1,4 @@
+import {LIMIT} from '../../../configs/app.config';
 import {useCallback, useState} from 'react';
 import {
   AccessToken,
@@ -20,7 +21,7 @@ const useGetLikes = () => {
     const getLikeGraphApi = new GraphRequest(
       `/${
         token.userID
-      }/likes?fields=picture{url},name,followers_count,description,about&limit=25${
+      }/likes?fields=picture{url},name,followers_count,description,about&limit=${LIMIT}${
         next ? `&after=${next}` : ''
       }`,
       {

@@ -1,9 +1,11 @@
+import {LIMIT} from '../../../configs/app.config';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   ListRenderItem,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -24,15 +26,23 @@ const LikesScreen = () => {
   }, [getLikes]);
 
   useEffect(() => {
+    if (data?.data.length === 0) {
+      setNext(null);
+      return;
+    }
     if (data) {
       setPageLikes(prev => [...prev, ...data.data]);
-      setNext(data.paging.cursors.after);
+
+      if (data.data.length > LIMIT) {
+        setNext(data.paging.cursors.after);
+      }
     }
   }, [data]);
 
   const handleLoadMore = () => {
     if (next) {
       getLikes(next);
+      setNext(null);
     }
   };
 
@@ -49,23 +59,22 @@ const LikesScreen = () => {
   };
 
   const renderLoading = () => {
+    if (!loading && !next) {
+      return <Text>No more likes</Text>;
+    }
     return <ActivityIndicator />;
   };
 
   return (
     <View style={styles.container}>
-      {!data && loading && <ActivityIndicator size="large" />}
-
-      {data && (
-        <FlatList
-          data={pageLikes}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={renderLoading}
-        />
-      )}
+      <FlatList
+        data={pageLikes}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={renderLoading}
+      />
 
       {selectedItem && (
         <Modal
